@@ -1,0 +1,16 @@
+server:
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: pmanager
+  datasource:
+    url: jdbc:h2:mem:testedb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    show-sql: true
