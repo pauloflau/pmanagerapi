@@ -13,6 +13,7 @@ import com.jmp.pmanager.domain.service.ProjetoService;
 import com.jmp.pmanager.infrastructure.dto.ProjetoDto;
 import com.jmp.pmanager.infrastructure.dto.SalvarProjetoDto;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -23,7 +24,7 @@ public class ProjetoController {
 	private final ProjetoService projetoService;
 	
 	@PostMapping
-	public ResponseEntity<ProjetoDto> criarProjeto(@RequestBody SalvarProjetoDto dto){
+	public ResponseEntity<ProjetoDto> criarProjeto(@RequestBody @Valid SalvarProjetoDto dto){
 		Projeto projeto = projetoService.criarProjeto(dto);
 		return ResponseEntity
 				.created(URI.create("/projetos/" + projeto.getId()))
