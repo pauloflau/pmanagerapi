@@ -2,6 +2,8 @@ server:
   servlet:
     context-path: /
 spring:
+  jackson:
+    default-property-inclusion: non_null
   application:
     name: pmanager
   datasource:
