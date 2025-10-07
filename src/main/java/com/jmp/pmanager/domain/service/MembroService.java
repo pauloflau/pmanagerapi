@@ -1,6 +1,9 @@
 package com.jmp.pmanager.domain.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -74,7 +77,22 @@ public class MembroService {
 				//ou seja, nao busca pelo email que eu passei
 				//e o Objects.equals é usado porque trata nulos com segurança — evita NullPointerException.
 				.filter(membro -> !Objects.equals(membro.getId(), idNaoPesquisar))
-	                .isPresent();
+	                .isPresent();		
+	}
+	
+	public List<Membro> findMembros(String email){
+		List<Membro> membros = new ArrayList<Membro>();
 		
+		if(Objects.isNull(email)) {
+			membros = membroRepository.findAllAtivos();
+		}else {
+			Optional<Membro> membroAchado = membroRepository.findByEmailAndDeleted(email, false);
+		
+			if(membroAchado.isPresent()) {
+				membros.add(membroAchado.get());
+			}
+		}
+		
+		return membros;		
 	}
 }
