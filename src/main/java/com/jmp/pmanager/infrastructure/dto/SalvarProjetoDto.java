@@ -1,6 +1,7 @@
 package com.jmp.pmanager.infrastructure.dto;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
@@ -23,6 +24,9 @@ public class SalvarProjetoDto {
 	@NotNull(message = "Data inicial nao pode ser vazio")
     private final LocalDate dataFinal;
     private final String status;
+    
+    private final Set<String> membrosIds; 
+    
     
     @AssertTrue(message = "As datas nao sao consistente")
     private boolean isDataInicialAntesDataFinal(){
