@@ -13,19 +13,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jmp.pmanager.domain.entity.Projeto;
-import com.jmp.pmanager.domain.service.ProjetoService;
+import com.jmp.pmanager.domain.entity.Tarefa;
+import com.jmp.pmanager.domain.service.TarefaService;
 import com.jmp.pmanager.infrastructure.dto.ProjetoDto;
 import com.jmp.pmanager.infrastructure.dto.SalvarProjetoDto;
+import com.jmp.pmanager.infrastructure.dto.SalvarTarefaDto;
+import com.jmp.pmanager.infrastructure.dto.TarefaDto;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("projetos")
+@RequestMapping("/tarefas")
 @RequiredArgsConstructor
-public class ProjetoController {
-
-	private final ProjetoService projetoService;
+public class TarefaController {
+	private final TarefaService tarefaService;
 	
 	@PutMapping("{id}")
 	public ResponseEntity<ProjetoDto> atualizarProjeto(
@@ -49,10 +51,12 @@ public class ProjetoController {
     }
     
 	@PostMapping
-	public ResponseEntity<ProjetoDto> criarProjeto(@RequestBody @Valid SalvarProjetoDto dto){
-		Projeto projeto = projetoService.criarProjeto(dto);
+	public ResponseEntity<TarefaDto> criarTarefa(@RequestBody @Valid SalvarTarefaDto salvarTarefaDto){
+		Tarefa tarefa = tarefaService.criarTarefa(salvarTarefaDto);
+		
 		return ResponseEntity
-				.created(URI.create("/projetos/" + projeto.getId()))
-				.body(ProjetoDto.criar(projeto));
+				.created(URI.create("/tarefas/" + tarefa.getId()))
+				.body(TarefaDto.criar(tarefa));
 	}
+
 }
