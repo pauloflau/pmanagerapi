@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jmp.pmanager.domain.entity.Projeto;
 import com.jmp.pmanager.domain.entity.Tarefa;
 import com.jmp.pmanager.domain.service.TarefaService;
-import com.jmp.pmanager.infrastructure.dto.ProjetoDto;
-import com.jmp.pmanager.infrastructure.dto.SalvarProjetoDto;
 import com.jmp.pmanager.infrastructure.dto.SalvarTarefaDto;
 import com.jmp.pmanager.infrastructure.dto.TarefaDto;
 
@@ -28,35 +25,31 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TarefaController {
 	private final TarefaService tarefaService;
-	
+
 	@PutMapping("{id}")
-	public ResponseEntity<ProjetoDto> atualizarProjeto(
-		@PathVariable String id,  
-		@RequestBody @Valid SalvarProjetoDto dto
-	){
-		Projeto projeto = projetoService.atualizarProjeto(id, dto);
-		return ResponseEntity.ok(ProjetoDto.criar(projeto));
+	public ResponseEntity<TarefaDto> atualizarTarefa(@PathVariable String id,
+			@RequestBody @Valid SalvarTarefaDto salvarTarefaDto) {
+		Tarefa tarefa = tarefaService.atualizarTarefa(id, salvarTarefaDto);
+		return ResponseEntity.ok(TarefaDto.criar(tarefa));
 	}
-	 
+
 	@DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteProjeto(@PathVariable String id){
-        projetoService.deletarProjeto(id);
-        return ResponseEntity.noContent().build();
+	public ResponseEntity<Void> deletarTarefa(@PathVariable String id) {
+		tarefaService.deletarTarefa(id);
+		return ResponseEntity.noContent().build();
 	}
-    
-    @GetMapping("/{id}")
-    public ResponseEntity<ProjetoDto> findById(@PathVariable String id){
-        Projeto projeto = projetoService.buscarId(id);
-        return  ResponseEntity.ok(ProjetoDto.criar(projeto)); 
-    }
-    
+
+	@GetMapping("/{id}")
+	public ResponseEntity<TarefaDto> findById(@PathVariable String id) {
+		Tarefa tarefa = tarefaService.buscarId(id);
+		return ResponseEntity.ok(TarefaDto.criar(tarefa));
+	}
+
 	@PostMapping
-	public ResponseEntity<TarefaDto> criarTarefa(@RequestBody @Valid SalvarTarefaDto salvarTarefaDto){
+	public ResponseEntity<TarefaDto> criarTarefa(@RequestBody @Valid SalvarTarefaDto salvarTarefaDto) {
 		Tarefa tarefa = tarefaService.criarTarefa(salvarTarefaDto);
-		
-		return ResponseEntity
-				.created(URI.create("/tarefas/" + tarefa.getId()))
-				.body(TarefaDto.criar(tarefa));
+
+		return ResponseEntity.created(URI.create("/tarefas/" + tarefa.getId())).body(TarefaDto.criar(tarefa));
 	}
 
 }

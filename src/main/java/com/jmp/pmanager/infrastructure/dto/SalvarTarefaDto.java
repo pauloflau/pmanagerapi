@@ -20,5 +20,5 @@ public class SalvarTarefaDto {
 	@Positive(message="Numero de dias deve ser positivo")
 	private final Integer numeroDeDias;
 	
-	private final StatusTarefa status;
+	private final String status;
 }
