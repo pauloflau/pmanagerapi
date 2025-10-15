@@ -12,6 +12,8 @@ public class TarefaDto {
 	private final String descricao;
 	private final Integer numeroDeDias;
 	private final StatusTarefa status;
+	private final ProjetoDto projeto;
+	private final MembroDto membroAtribuido;
 	
 	public static TarefaDto criar(Tarefa tarefa) {
 		return new TarefaDto(
@@ -19,7 +21,9 @@ public class TarefaDto {
 				tarefa.getTitulo(),
 				tarefa.getDescricao(),
 				tarefa.getNumeroDeDias(),
-				tarefa.getStatus());
-				
+				tarefa.getStatus(),
+				ProjetoDto.criar(tarefa.getProjeto()),
+				MembroDto.criar(tarefa.getMembroAtribuido())
+		);				
 	}
 }

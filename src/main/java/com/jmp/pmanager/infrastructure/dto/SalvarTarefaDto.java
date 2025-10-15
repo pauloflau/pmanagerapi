@@ -1,7 +1,5 @@
 package com.jmp.pmanager.infrastructure.dto;
 
-import com.jmp.pmanager.domain.model.StatusTarefa;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -21,4 +19,8 @@ public class SalvarTarefaDto {
 	private final Integer numeroDeDias;
 	
 	private final String status;
+	
+	private final String idProjeto;
+	
+	private final String idMembro;
 }

@@ -1,8 +1,12 @@
 package com.jmp.pmanager.domain.service;
 
+import java.util.Objects;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.jmp.pmanager.domain.entity.Membro;
+import com.jmp.pmanager.domain.entity.Projeto;
 import com.jmp.pmanager.domain.entity.Tarefa;
 import com.jmp.pmanager.domain.model.StatusTarefa;
 import com.jmp.pmanager.domain.repository.TarefaRepository;
@@ -16,11 +20,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TarefaService {
 
+	private final ProjetoService projetoService;
+	private final MembroService membroService;
 	private final TarefaRepository tarefaRepository;
 
 	@Transactional
 	public Tarefa atualizarTarefa(String id, SalvarTarefaDto salvarTarefaDto) {
-
+	        
 		Tarefa tarefa = buscarId(id);
 		tarefa.setTitulo(salvarTarefaDto.getTitulo());
 		tarefa.setDescricao(salvarTarefaDto.getDescricao());
@@ -54,9 +60,37 @@ public class TarefaService {
 
 	@Transactional
 	public Tarefa criarTarefa(SalvarTarefaDto salvarTarefaDto) {
-		Tarefa tarefa = Tarefa.builder().titulo(salvarTarefaDto.getTitulo()).descricao(salvarTarefaDto.getDescricao())
-				.numeroDeDias(salvarTarefaDto.getNumeroDeDias()).status(StatusTarefa.PENDENTE).build();
+		
+		Projeto projeto = null;
+		if( Objects.isNull(salvarTarefaDto.getIdProjeto())){
+			//se o projeto veio nulo entao
+			projeto = null;
+		}else{
+			//senão eu busco o id do projeto
+			projeto = projetoService.buscarId(salvarTarefaDto.getIdProjeto());
+		}
+		
+		Membro membro = null;
+        if(Objects.isNull(salvarTarefaDto.getIdMembro())){
+            membro = null;
+        }else{
+            membro = membroService.buscarMembroId(salvarTarefaDto.getIdMembro());
+        }
+        
+        Tarefa tarefa = Tarefa
+        		.builder()
+        		.titulo(salvarTarefaDto.getTitulo())
+        		.descricao(salvarTarefaDto.getDescricao())
+				.numeroDeDias(salvarTarefaDto.getNumeroDeDias())
+				.status(StatusTarefa.PENDENTE)
+				.projeto(projeto)
+				.membroAtribuido(membro)
+				.build();
 
+        
+        
+        
+        
 		tarefaRepository.save(tarefa);
 		return tarefa;
 	}
