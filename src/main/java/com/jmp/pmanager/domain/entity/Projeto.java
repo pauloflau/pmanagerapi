@@ -59,6 +59,6 @@ public class Projeto {
 	)
 	private List<Membro> membros;
 
-	@OneToMany(mappedBy = "projeto")
+	@OneToMany(mappedBy = "projeto", orphanRemoval = true)
 	private List<Tarefa> tarefas;
 }

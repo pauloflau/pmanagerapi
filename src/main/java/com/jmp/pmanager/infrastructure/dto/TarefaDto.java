@@ -1,5 +1,7 @@
 package com.jmp.pmanager.infrastructure.dto;
 
+import java.util.Optional;
+
 import com.jmp.pmanager.domain.entity.Tarefa;
 import com.jmp.pmanager.domain.model.StatusTarefa;
 
@@ -22,8 +24,8 @@ public class TarefaDto {
 				tarefa.getDescricao(),
 				tarefa.getNumeroDeDias(),
 				tarefa.getStatus(),
-				ProjetoDto.criar(tarefa.getProjeto()),
-				MembroDto.criar(tarefa.getMembroAtribuido())
+				Optional.ofNullable(tarefa.getProjeto()).map(ProjetoDto::criar).orElse(null),
+				Optional.ofNullable(tarefa.getMembroAtribuido()).map(MembroDto::criar).orElse(null)
 		);				
 	}
 }
