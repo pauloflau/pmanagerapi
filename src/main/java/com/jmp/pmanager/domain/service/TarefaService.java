@@ -27,11 +27,28 @@ public class TarefaService {
 	@Transactional
 	public Tarefa atualizarTarefa(String id, SalvarTarefaDto salvarTarefaDto) {
 	        
+		Projeto projeto;
+        if( Objects.isNull(salvarTarefaDto.getIdProjeto())){
+            projeto = null;
+        }else{
+            projeto = projetoService.buscarId(salvarTarefaDto.getIdProjeto());
+        }
+
+        Membro membro;
+        if(Objects.isNull(salvarTarefaDto.getIdMembro())){
+            membro = null;
+        }else{
+            membro = membroService.buscarMembroId(salvarTarefaDto.getIdMembro());
+        }
+        
+		
 		Tarefa tarefa = buscarId(id);
 		tarefa.setTitulo(salvarTarefaDto.getTitulo());
 		tarefa.setDescricao(salvarTarefaDto.getDescricao());
 		tarefa.setNumeroDeDias(salvarTarefaDto.getNumeroDeDias());
 		tarefa.setStatus(converteParaTarefaStatus(salvarTarefaDto.getStatus()));
+		tarefa.setProjeto(projeto);
+		tarefa.setMembroAtribuido(membro);
 
 		// nao preciso fazer a linha abaixo pq eu usei a anotacao @Transactional
 		// projetoRepository.save(projeto);
@@ -86,10 +103,6 @@ public class TarefaService {
 				.projeto(projeto)
 				.membroAtribuido(membro)
 				.build();
-
-        
-        
-        
         
 		tarefaRepository.save(tarefa);
 		return tarefa;
