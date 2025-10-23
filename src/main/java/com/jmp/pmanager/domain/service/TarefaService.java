@@ -1,8 +1,10 @@
 package com.jmp.pmanager.domain.service;
 
-import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,18 +28,20 @@ public class TarefaService {
 	private final TarefaRepository tarefaRepository;
 	
 	@Transactional(readOnly = true)
-	public List<Tarefa> buscarTarefa(
+	public Page<Tarefa> buscarTarefa(
 		String idProjeto,
 		String idMembro,
 		String strStatus,
-		String tituloParcial)
-	{
+		String tituloParcial,
+		Integer pagina
+	){
 	
 		return tarefaRepository.buscarTarefa(
 			idProjeto, 
 			idMembro, 
 			strStatus, 
-			tituloParcial
+			tituloParcial,
+			PageRequest.of(Optional.ofNullable(pagina).orElse(0),3)
 		);
 	
 	}

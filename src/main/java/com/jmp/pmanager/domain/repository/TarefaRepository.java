@@ -1,7 +1,7 @@
 package com.jmp.pmanager.domain.repository;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,10 +22,11 @@ public interface TarefaRepository extends JpaRepository<Tarefa, String> {
 		    (:status IS NULL OR t.status= :status) AND
 		    (:tituloParcial IS NULL OR UPPER(t.titulo) LIKE CONCAT ('%', UPPER(:tituloParcial), '%'))
 		""")
-	List<Tarefa> buscarTarefa(
+	Page<Tarefa> buscarTarefa(
 		@Param("idProjeto") String idProjeto, 
 		@Param("idMembro") String idMembro, 
 		@Param("status") String status, 
-		@Param("tituloParcial") String tituloParcial
+		@Param("tituloParcial") String tituloParcial,
+		Pageable pageable
 	);
 }
