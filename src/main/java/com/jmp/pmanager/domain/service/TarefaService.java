@@ -1,5 +1,6 @@
 package com.jmp.pmanager.domain.service;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.stereotype.Service;
@@ -23,6 +24,23 @@ public class TarefaService {
 	private final ProjetoService projetoService;
 	private final MembroService membroService;
 	private final TarefaRepository tarefaRepository;
+	
+	@Transactional(readOnly = true)
+	public List<Tarefa> buscarTarefa(
+		String idProjeto,
+		String idMembro,
+		String strStatus,
+		String tituloParcial)
+	{
+	
+		return tarefaRepository.buscarTarefa(
+			idProjeto, 
+			idMembro, 
+			strStatus, 
+			tituloParcial
+		);
+	
+	}
 
 	@Transactional
 	public Tarefa atualizarTarefa(String id, SalvarTarefaDto salvarTarefaDto) {

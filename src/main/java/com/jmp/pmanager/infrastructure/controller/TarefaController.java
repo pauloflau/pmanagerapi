@@ -1,6 +1,8 @@
 package com.jmp.pmanager.infrastructure.controller;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jmp.pmanager.domain.entity.Tarefa;
@@ -26,6 +29,23 @@ import lombok.RequiredArgsConstructor;
 public class TarefaController {
 	private final TarefaService tarefaService;
 
+	@GetMapping
+	public ResponseEntity<List<TarefaDto>> buscarTarefa(
+		@RequestParam(required=false) String idProjeto,
+		@RequestParam(required=false) String idMembro,
+		@RequestParam(required=false) String strStatus,
+		@RequestParam(required=false) String tituloParcial
+	){
+		List<Tarefa> tarefas = tarefaService.buscarTarefa(idProjeto, idMembro, strStatus, tituloParcial);
+		
+		List<TarefaDto> tarefaDtos = new ArrayList<>();
+	    for (Tarefa tarefa : tarefas) {
+	        tarefaDtos.add(TarefaDto.criar(tarefa));
+	    }
+
+	    return ResponseEntity.ok(tarefaDtos);
+	}
+	
 	@PutMapping("{id}")
 	public ResponseEntity<TarefaDto> atualizarTarefa(@PathVariable String id,
 			@RequestBody @Valid SalvarTarefaDto salvarTarefaDto) {
