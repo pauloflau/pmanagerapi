@@ -20,6 +20,7 @@ import com.jmp.pmanager.domain.entity.Tarefa;
 import com.jmp.pmanager.domain.service.TarefaService;
 import com.jmp.pmanager.infrastructure.dto.SalvarTarefaDto;
 import com.jmp.pmanager.infrastructure.dto.TarefaDto;
+import com.jmp.pmanager.infrastructure.util.PropriedadesOrdenacao;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,9 +37,19 @@ public class TarefaController {
 		@RequestParam(required=false) String idMembro,
 		@RequestParam(required=false) String strStatus,
 		@RequestParam(required=false) String tituloParcial,
-        @RequestParam(required = false) Integer pagina
+        @RequestParam(required = false) Integer pagina,
+        @RequestParam(required = false) String direcao,
+        @RequestParam(required = false) PropriedadesOrdenacao propriedades
 	){
-		Page<Tarefa> tarefas = tarefaService.buscarTarefa(idProjeto, idMembro, strStatus, tituloParcial, pagina);
+		Page<Tarefa> tarefas = tarefaService.buscarTarefa(
+			idProjeto, 
+			idMembro, 
+			strStatus, 
+			tituloParcial, 
+			pagina, 
+			direcao, 
+			propriedades.getListaPropriedadeDeOrdenacao()
+		);
 		
 		List<TarefaDto> tarefaDtos = new ArrayList<>();
 	    for (Tarefa tarefa : tarefas) {
