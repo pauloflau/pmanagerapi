@@ -30,24 +30,18 @@ public class TarefaService {
 	private final TarefaRepository tarefaRepository;
 	
 	@Transactional(readOnly = true)
-	public Page<Tarefa> buscarTarefa(
+	public List<Tarefa> buscarTarefa(
 		String idProjeto,
 		String idMembro,
 		String strStatus,
-		String tituloParcial,
-		Integer pagina,
-		String direcao,
-		List<String> propriedades
+		String tituloParcial
 	){
-		//defino o campo que quero ordenar
-		Sort teste = Sort.by(Sort.Direction.DESC, "titulo");
 		
 		return tarefaRepository.buscarTarefa(
 			idProjeto, 
 			idMembro, 
 			strStatus, 
-			tituloParcial,
-			PageRequest.of(Optional.ofNullable(pagina).orElse(0),3, teste)
+			tituloParcial
 		);
 	
 	}

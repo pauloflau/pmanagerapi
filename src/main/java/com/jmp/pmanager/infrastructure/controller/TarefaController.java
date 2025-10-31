@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,6 @@ import com.jmp.pmanager.domain.entity.Tarefa;
 import com.jmp.pmanager.domain.service.TarefaService;
 import com.jmp.pmanager.infrastructure.dto.SalvarTarefaDto;
 import com.jmp.pmanager.infrastructure.dto.TarefaDto;
-import com.jmp.pmanager.infrastructure.util.PropriedadesOrdenacao;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,19 +34,13 @@ public class TarefaController {
 		@RequestParam(required=false) String idProjeto,
 		@RequestParam(required=false) String idMembro,
 		@RequestParam(required=false) String strStatus,
-		@RequestParam(required=false) String tituloParcial,
-        @RequestParam(required = false) Integer pagina,
-        @RequestParam(required = false) String direcao,
-        @RequestParam(required = false) PropriedadesOrdenacao propriedades
+		@RequestParam(required=false) String tituloParcial
 	){
-		Page<Tarefa> tarefas = tarefaService.buscarTarefa(
+		List<Tarefa> tarefas = tarefaService.buscarTarefa(
 			idProjeto, 
 			idMembro, 
 			strStatus, 
-			tituloParcial, 
-			pagina, 
-			direcao, 
-			propriedades.getListaPropriedadeDeOrdenacao()
+			tituloParcial
 		);
 		
 		List<TarefaDto> tarefaDtos = new ArrayList<>();
