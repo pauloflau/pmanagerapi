@@ -82,7 +82,7 @@ cd project-manager-api
 ### Contato
 
 Caso queira trocar ideias ou sugerir melhorias:  
-[LinkedIn](https://www.linkedin.com/in/paulo-flau-43b667382/) 
+[LinkedIn](https://www.linkedin.com/in/pauloflau/) 
 
 ## Contribuição
 Contribuições são bem-vindas!
