@@ -79,10 +79,11 @@ cd project-manager-api
 ```json
 ./mvnw spring-boot:run
 ```
-### Contato
+## Contato
 
 Caso queira trocar ideias ou sugerir melhorias:  
-[LinkedIn](https://www.linkedin.com/in/pauloflau/) 
+**Paulo Flau**
+- [LinkedIn](https://www.linkedin.com/in/pauloflau/) 
 
 ## Contribuição
 Contribuições são bem-vindas!
